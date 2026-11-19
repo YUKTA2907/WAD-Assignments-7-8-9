@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPL Ticket Booking &amp; Client-Side Validation - Assignment 9</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Responsive Navigation -->
+  <header>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <span class="brand-icon">🏏</span>
+        <h1 class="brand-title">IPL Portal</h1>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="../Assignment8/index.html#home" class="nav-link">Home</a></li>
+        <li><a href="../Assignment8/index.html#matches" class="nav-link">Match Schedule</a></li>
+        <li><a href="../Assignment8/index.html#pricing" class="nav-link">Pricing Tiers</a></li>
+        <li><a href="book-validation.html" class="nav-link active">Book Tickets</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge">Official Booking Portal</span>
+      <h1>IPL Match Ticket Booking</h1>
+      <p>Reserve your stadium seats with instant confirmation. Fill in the form below with valid attendee details.</p>
+    </div>
+  </section>
+
+  <!-- Main Container: 2-Column Responsive Grid -->
+  <main class="container">
+
+    <!-- Form Column -->
+    <div class="card form-card">
+      <div class="form-header">
+        <h2>Attendee &amp; Ticket Details</h2>
+        <p class="subtitle">All fields are mandatory. Please verify your details before submitting.</p>
+      </div>
+
+      <form id="bookingForm" novalidate>
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="name">Full Name <span class="required">*</span></label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="e.g. Rahul Sharma"
+            autocomplete="name"
+          />
+          <div class="error" id="nameError"></div>
+        </div>
+
+        <!-- Email Address -->
+        <div class="form-group">
+          <label for="email">Email Address <span class="required">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="e.g. rahul.sharma@example.com"
+            autocomplete="email"
+          />
+          <div class="error" id="emailError"></div>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="form-group">
+          <label for="phone">Phone Number (10 Digits) <span class="required">*</span></label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="e.g. 9876543210"
+            maxlength="10"
+            autocomplete="tel"
+          />
+          <div class="error" id="phoneError"></div>
+        </div>
+
+        <!-- Match Selection -->
+        <div class="form-group">
+          <label for="match">Select Match <span class="required">*</span></label>
+          <select id="match" name="match">
+            <option value="">-- Choose an Upcoming Match --</option>
+            <option value="CSK vs MI (29-Jan-2027, Chennai)">Match 01: CSK vs MI - 29-Jan-2027 (Chennai)</option>
+            <option value="RR vs RCB (30-Jan-2027, Mohali)">Match 02: RR vs RCB - 30-Jan-2027 (Mohali)</option>
+            <option value="MI vs RCB (31-Jan-2027, Mumbai)">Match 03: MI vs RCB - 31-Jan-2027 (Mumbai)</option>
+            <option value="KKR vs SRH (02-Feb-2027, Kolkata)">Match 04: KKR vs SRH - 02-Feb-2027 (Kolkata)</option>
+            <option value="CSK vs KKR (05-Feb-2027, Chennai)">Match 05: CSK vs KKR - 05-Feb-2027 (Chennai)</option>
+          </select>
+          <div class="error" id="matchError"></div>
+        </div>
+
+        <!-- Number of Tickets -->
+        <div class="form-group">
+          <label for="tickets">Number of Tickets (1 to 10) <span class="required">*</span></label>
+          <input
+            type="number"
+            id="tickets"
+            name="tickets"
+            min="1"
+            max="10"
+            placeholder="Enter quantity (1 - 10)"
+          />
+          <div class="error" id="ticketsError"></div>
+        </div>
+
+        <!-- Submit & Reset Buttons -->
+        <div class="form-actions">
+          <button type="submit" id="submitBtn" class="btn btn-primary">
+            Confirm &amp; Book Tickets
+          </button>
+          <button type="button" id="resetBtn" class="btn btn-secondary">
+            Clear Form
+          </button>
+        </div>
+      </form>
+
+      <!-- Loading Animation Indicator -->
+      <div id="loading" class="loading-container">
+        <div class="spinner"></div>
+        <p class="loading-text">Validating details &amp; reserving seats...</p>
+      </div>
+
+      <!-- Success Notification Message -->
+      <div id="successMessage" class="success-box">
+        <div class="success-icon">✅</div>
+        <h3>Booking Confirmed!</h3>
+        <p>Your tickets have been validated and reserved successfully. A confirmation SMS and email have been sent to your registered contact details.</p>
+      </div>
+    </div>
+
+    <!-- Booking Summary Column -->
+    <div class="card summary-card">
+      <div class="summary-header">
+        <h2>Live Booking Summary</h2>
+        <span class="badge live-badge">Real-Time</span>
+      </div>
+
+      <div class="summary-receipt">
+        <div class="receipt-row">
+          <span class="label">Attendee Name:</span>
+          <span class="value" id="summaryName">Not provided</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="label">Email:</span>
+          <span class="value" id="summaryEmail">Not provided</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="label">Phone:</span>
+          <span class="value" id="summaryPhone">Not provided</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="label">Selected Match:</span>
+          <span class="value highlight" id="summaryMatch">None selected</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="label">Ticket Quantity:</span>
+          <span class="value" id="summaryTickets">0</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="label">Price per Ticket:</span>
+          <span class="value">₹1,000</span>
+        </div>
+
+        <div class="receipt-divider"></div>
+
+        <div class="receipt-row total-row">
+          <span class="label">Total Amount:</span>
+          <span class="value total-price">₹<span id="total">0</span></span>
+        </div>
+
+        <div class="receipt-row status-row">
+          <span class="label">Booking Status:</span>
+          <span class="status-tag status-pending" id="summaryStatus">Awaiting Submission</span>
+        </div>
+
+        <div class="receipt-row" id="refRow" style="display: none;">
+          <span class="label">Booking Reference:</span>
+          <span class="value" id="summaryRef">---</span>
+        </div>
+      </div>
+
+      <div class="summary-notice">
+        <h4>📌 Important Notes:</h4>
+        <ul>
+          <li>Ticket price includes stadium access and GST.</li>
+          <li>Gates open 2.5 hours before scheduled match start.</li>
+          <li>Cancellation permitted up to 48 hours prior.</li>
+        </ul>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2026 IPL Ticket Booking Portal. All Rights Reserved. | Web Application Development (WAD) - Assignment 9</p>
+      <p><a href="../Assignment8/index.html">← Return to Match Schedule</a></p>
+    </div>
+  </footer>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
