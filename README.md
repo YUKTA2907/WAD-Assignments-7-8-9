@@ -85,6 +85,28 @@ This repository contains the complete, verified, and production-tested solutions
   - **Verified Screenshots:**
     - `Assignment9/screenshots/validation.png` (Validation errors state)
     - `Assignment9/screenshots/success.png` (Successful booking confirmation state)
+    - `Assignment9/screenshots/booking-history.png` (Booking History table and live statistics cards)
+
+---
+
+### 📋 Feature: IPL Booking History & Browser-Session Statistics
+- **Objective:** Provide a persistent, transparent record of all successful ticket bookings made in the current browser session.
+- **Key Features:**
+  - **Summary Statistics Cards (5 Real-Time Metrics):**
+    - **Total Bookings:** Count of successful checkout transactions.
+    - **Total Tickets Sold:** Aggregate tickets booked across all transactions.
+    - **General Category Bookings:** Count of General Stand bookings.
+    - **Premium Category Bookings:** Count of Premium Pavilion bookings.
+    - **VIP Category Bookings:** Count of VIP Hospitality bookings.
+    - Metrics are computed directly from genuine stored records (never fabricated).
+  - **Structured Booking History Table:**
+    - Detailed columns: `Booking ID`, `Customer`, `Match`, `Category`, `Tickets`, `Total Amount`, `Booking Date & Time`, and `Status`.
+    - Wrapped inside an `overflow-x: auto` container for seamless horizontal scrolling on mobile.
+  - **LocalStorage Persistence:**
+    - Preserves all confirmed booking records across page reloads.
+    - Real-time updates immediately upon successful booking form submission.
+    - Rejects invalid or incomplete form submissions from entering the history.
+    - Includes a clear history control to reset browser storage on demand.
 
 ---
 

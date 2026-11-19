@@ -21,6 +21,7 @@
         <li><a href="../Assignment8/index.html#matches" class="nav-link">Match Schedule</a></li>
         <li><a href="../Assignment8/index.html#pricing" class="nav-link">Pricing Tiers</a></li>
         <li><a href="book-validation.html" class="nav-link active">Book Tickets</a></li>
+        <li><a href="#history" class="nav-link">Booking History</a></li>
       </ul>
     </nav>
   </header>
@@ -99,6 +100,17 @@
           <div class="error" id="matchError"></div>
         </div>
 
+        <!-- Ticket Category Selection -->
+        <div class="form-group">
+          <label for="category">Ticket Category <span class="required">*</span></label>
+          <select id="category" name="category">
+            <option value="General">General Stand (₹1,000 / seat)</option>
+            <option value="Premium">Premium Pavilion (₹2,500 / seat)</option>
+            <option value="VIP">VIP Hospitality (₹5,000 / seat)</option>
+          </select>
+          <div class="error" id="categoryError"></div>
+        </div>
+
         <!-- Number of Tickets -->
         <div class="form-group">
           <label for="tickets">Number of Tickets (1 to 10) <span class="required">*</span></label>
@@ -172,8 +184,13 @@
         </div>
 
         <div class="receipt-row">
+          <span class="label">Ticket Category:</span>
+          <span class="value" id="summaryCategory">General Stand</span>
+        </div>
+
+        <div class="receipt-row">
           <span class="label">Price per Ticket:</span>
-          <span class="value">₹1,000</span>
+          <span class="value" id="summaryUnitPrice">₹1,000</span>
         </div>
 
         <div class="receipt-divider"></div>
@@ -205,6 +222,65 @@
     </div>
 
   </main>
+
+  <!-- Booking History & Statistics Section -->
+  <section class="container-history" id="history">
+    <div class="card history-card">
+      <div class="history-header">
+        <div>
+          <h2>📋 Booking History &amp; Statistics</h2>
+          <p class="subtitle">Real-time records stored in your browser session (localStorage). All statistics update automatically upon successful bookings.</p>
+        </div>
+        <button type="button" id="clearHistoryBtn" class="btn btn-outline-danger">Clear Browser History</button>
+      </div>
+
+      <!-- Summary Statistics Cards Grid (5 Cards) -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-number" id="statTotalBookings">0</div>
+          <div class="stat-title">Total Bookings</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number" id="statTotalTickets">0</div>
+          <div class="stat-title">Total Tickets Sold</div>
+        </div>
+        <div class="stat-box category-stat-box general-stat">
+          <div class="stat-number" id="statGeneralBookings">0</div>
+          <div class="stat-title">General Bookings</div>
+        </div>
+        <div class="stat-box category-stat-box premium-stat">
+          <div class="stat-number" id="statPremiumBookings">0</div>
+          <div class="stat-title">Premium Bookings</div>
+        </div>
+        <div class="stat-box category-stat-box vip-stat">
+          <div class="stat-number" id="statVipBookings">0</div>
+          <div class="stat-title">VIP Bookings</div>
+        </div>
+      </div>
+
+      <!-- Horizontally Scrollable Booking History Table -->
+      <p class="table-scroll-hint">👉 Swipe horizontally to view full booking details</p>
+      <div class="table-container">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Customer</th>
+              <th>Match</th>
+              <th>Category</th>
+              <th>Tickets</th>
+              <th>Total Amount</th>
+              <th>Booking Date &amp; Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody">
+            <!-- Dynamic rows populated from localStorage -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer>
