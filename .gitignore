@@ -1,0 +1,13 @@
+# OS Generated Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Temporary scratch & logs
+*.tmp
+*.log
+
+# Node dependencies
+node_modules/
