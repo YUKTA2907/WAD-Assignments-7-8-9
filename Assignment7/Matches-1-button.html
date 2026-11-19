@@ -1,0 +1,328 @@
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPL Match Schedule</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+      }
+
+      /* Flexbox Navigation */
+      nav {
+        background-color: #0d1b2a;
+        color: white;
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      nav h2 {
+        margin: 0;
+        color: #ffd700;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+      }
+
+      nav a:hover {
+        color: #ffd700;
+      }
+
+      /* Hero Section */
+      .hero {
+        background-color: #142b42;
+        color: white;
+        text-align: center;
+        padding: 35px;
+      }
+
+      /* Main Container */
+      .container {
+        max-width: 1000px;
+        margin: 25px auto;
+        padding: 15px;
+      }
+
+      /* Cards */
+      .card {
+        background-color: white;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        border-top: 4px solid #ffd700;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Filter */
+      .filter-section {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      select {
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      button {
+        padding: 10px 16px;
+        background-color: #0d1b2a;
+        color: #ffd700;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #29445f;
+      }
+
+      /* Table */
+      .table-container {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 650px;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #0d1b2a;
+        color: #ffd700;
+      }
+
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #0d1b2a;
+        color: #ffd700;
+        text-align: center;
+        padding: 20px;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 600px) {
+        nav {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        nav ul {
+          gap: 15px;
+        }
+
+        .hero {
+          padding: 25px 10px;
+        }
+
+        .card {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <h2>🏏 IPL Portal</h2>
+
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#matches">Matches</a></li>
+        <li><a href="#footer">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero" id="home">
+      <h1>IPL Match Schedule</h1>
+      <p>Find your match and book your tickets</p>
+    </div>
+
+    <div class="container">
+      <!-- Information Card -->
+      <div class="card">
+        <h2>Ticket Booking Information</h2>
+        <ul>
+          <li>Select your favourite team.</li>
+          <li>Check the match date, time and venue.</li>
+          <li>Compare ticket prices.</li>
+          <li>Click Book to select your match.</li>
+        </ul>
+      </div>
+
+      <!-- Match Schedule -->
+      <div class="card" id="matches">
+        <h2>Find a Match</h2>
+
+        <div class="filter-section">
+          <label for="team">Filter by Team:</label>
+
+          <select id="team">
+            <option value="all">All Teams</option>
+            <option value="CSK">CSK</option>
+            <option value="MI">MI</option>
+            <option value="RR">RR</option>
+            <option value="RCB">RCB</option>
+          </select>
+
+          <button onclick="applyFilter()">Apply Filter</button>
+
+          <button onclick="showAll()">Show All</button>
+        </div>
+
+        <h3>Upcoming Matches</h3>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Match No</th>
+                <th>Teams</th>
+                <th>Date & Time</th>
+                <th>Venue</th>
+                <th>Ticket Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody id="matchTable">
+              <tr data-teams="CSK MI">
+                <td>1</td>
+                <td>CSK-MI</td>
+                <td>29-Jan-2027 6:30 PM</td>
+                <td>Chennai</td>
+                <td>800-5000/-</td>
+                <td>
+                  <button onclick="bookMatch(this)">Book</button>
+                </td>
+              </tr>
+
+              <tr data-teams="RR RCB">
+                <td>2</td>
+                <td>RR-RCB</td>
+                <td>30-Jan-2027 6:30 PM</td>
+                <td>Mohali</td>
+                <td>800-5000/-</td>
+                <td>
+                  <button onclick="bookMatch(this)">Book</button>
+                </td>
+              </tr>
+
+              <tr data-teams="MI RCB">
+                <td>3</td>
+                <td>MI-RCB</td>
+                <td>31-Jan-2027 7:30 PM</td>
+                <td>Mumbai</td>
+                <td>1000-6000/-</td>
+                <td>
+                  <button onclick="bookMatch(this)">Book</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <p>&copy; 2026 IPL Match Schedule. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Apply Filter Button
+      function applyFilter() {
+        let selectedTeam = document.getElementById("team").value;
+
+        let rows = document.querySelectorAll("#matchTable tr");
+
+        rows.forEach(function (row) {
+          let teams = row.getAttribute("data-teams");
+
+          if (selectedTeam === "all" || teams.includes(selectedTeam)) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+
+      // Show All Button
+      function showAll() {
+        let rows = document.querySelectorAll("#matchTable tr");
+
+        rows.forEach(function (row) {
+          row.style.display = "";
+        });
+
+        document.getElementById("team").value = "all";
+      }
+
+      // Book Button
+      function bookMatch(button) {
+        let row = button.parentElement.parentElement;
+
+        let match = row.cells[1].innerText;
+        let date = row.cells[2].innerText;
+        let venue = row.cells[3].innerText;
+        let price = row.cells[4].innerText;
+
+        alert(
+          "Match Selected: " +
+            match +
+            "\nDate: " +
+            date +
+            "\nVenue: " +
+            venue +
+            "\nTicket Price: " +
+            price,
+        );
+      }
+    </script>
+  </body>
+</html>
+```

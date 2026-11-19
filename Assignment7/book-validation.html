@@ -1,0 +1,399 @@
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>IPL Ticket Booking</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+      }
+
+      /* Navigation */
+      nav {
+        background-color: #0d1b2a;
+        color: white;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      nav h2 {
+        color: #ffd700;
+        margin: 0;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+      }
+
+      /* Hero */
+      .hero {
+        background-color: #142b42;
+        color: white;
+        text-align: center;
+        padding: 30px;
+      }
+
+      /* Main Grid Layout */
+      .container {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 15px;
+
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+      }
+
+      /* Cards */
+      .card {
+        background-color: white;
+        padding: 25px;
+        border-radius: 12px;
+        border-top: 4px solid #ffd700;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        color: #0d1b2a;
+      }
+
+      /* Form */
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #0d1b2a;
+      }
+
+      /* Submit Button */
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #0d1b2a;
+        color: #ffd700;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #29445f;
+      }
+
+      /* Error Message */
+      .error {
+        color: red;
+        font-size: 13px;
+        margin-top: 5px;
+      }
+
+      /* Summary */
+      .summary {
+        background-color: #f8f8f8;
+        padding: 15px;
+        border-radius: 8px;
+        line-height: 2;
+      }
+
+      .summary h3 {
+        color: #0d1b2a;
+      }
+
+      /* Loading Animation */
+      #loading {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
+        color: #0d1b2a;
+        font-weight: bold;
+      }
+
+      .spinner {
+        width: 35px;
+        height: 35px;
+        border: 4px solid #ddd;
+        border-top: 4px solid #0d1b2a;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 10px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Footer */
+      footer {
+        background-color: #0d1b2a;
+        color: #ffd700;
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      /* Responsive Layout */
+      @media (max-width: 700px) {
+        .container {
+          grid-template-columns: 1fr;
+        }
+
+        nav {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <h2>🏏 IPL Portal</h2>
+      <a href="Matches-1-button.html">Back to Matches</a>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+      <h1>IPL Ticket Booking</h1>
+      <p>Enter your details to book your tickets</p>
+    </div>
+
+    <!-- Grid Layout -->
+    <div class="container">
+      <!-- Booking Form -->
+      <div class="card">
+        <h2>Booking Form</h2>
+
+        <form id="bookingForm">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name" />
+            <div class="error" id="nameError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" />
+            <div class="error" id="emailError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              type="tel"
+              id="phone"
+              placeholder="Enter 10 digit phone number"
+            />
+            <div class="error" id="phoneError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="match">Select Match</label>
+            <select id="match">
+              <option value="">Select Match</option>
+              <option value="CSK vs MI">CSK vs MI</option>
+              <option value="RR vs RCB">RR vs RCB</option>
+              <option value="MI vs RCB">MI vs RCB</option>
+            </select>
+            <div class="error" id="matchError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="tickets">Number of Tickets</label>
+            <input
+              type="number"
+              id="tickets"
+              min="1"
+              max="10"
+              placeholder="Enter number of tickets"
+            />
+            <div class="error" id="ticketsError"></div>
+          </div>
+
+          <button type="submit" id="submitBtn">Book Tickets</button>
+        </form>
+
+        <!-- Loading -->
+        <div id="loading">
+          <div class="spinner"></div>
+          Processing your booking...
+        </div>
+
+        <div
+          id="success"
+          style="
+            display: none;
+            color: green;
+            text-align: center;
+            margin-top: 15px;
+          "
+        >
+          Booking details validated successfully!
+        </div>
+      </div>
+
+      <!-- Booking Summary -->
+      <div class="card">
+        <h2>Booking Summary</h2>
+
+        <div class="summary">
+          <h3>Your Booking Details</h3>
+
+          <p>
+            <strong>Name:</strong> <span id="summaryName">Not entered</span>
+          </p>
+
+          <p>
+            <strong>Match:</strong> <span id="summaryMatch">Not selected</span>
+          </p>
+
+          <p><strong>Tickets:</strong> <span id="summaryTickets">0</span></p>
+
+          <p><strong>Price per Ticket:</strong> ₹1000</p>
+
+          <p><strong>Total Amount:</strong> ₹<span id="total">0</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 IPL Ticket Booking Portal. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript Validation -->
+    <script>
+      let form = document.getElementById("bookingForm");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        let name = document.getElementById("name").value.trim();
+
+        let email = document.getElementById("email").value.trim();
+
+        let phone = document.getElementById("phone").value.trim();
+
+        let match = document.getElementById("match").value;
+
+        let tickets = document.getElementById("tickets").value;
+
+        let valid = true;
+
+        // Clear previous errors
+        document.querySelectorAll(".error").forEach(function (error) {
+          error.innerText = "";
+        });
+
+        document.getElementById("success").style.display = "none";
+
+        // Name Validation
+        if (name === "") {
+          document.getElementById("nameError").innerText =
+            "Please enter your name.";
+          valid = false;
+        }
+
+        // Email Validation
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+          document.getElementById("emailError").innerText =
+            "Please enter a valid email.";
+          valid = false;
+        }
+
+        // Phone Validation
+        let phonePattern = /^[0-9]{10}$/;
+
+        if (!phonePattern.test(phone)) {
+          document.getElementById("phoneError").innerText =
+            "Enter a valid 10 digit phone number.";
+          valid = false;
+        }
+
+        // Match Validation
+        if (match === "") {
+          document.getElementById("matchError").innerText =
+            "Please select a match.";
+          valid = false;
+        }
+
+        // Ticket Validation
+        if (tickets === "" || Number(tickets) < 1 || Number(tickets) > 10) {
+          document.getElementById("ticketsError").innerText =
+            "Select between 1 and 10 tickets.";
+          valid = false;
+        }
+
+        // Stop if invalid
+        if (!valid) {
+          return;
+        }
+
+        // Update Booking Summary
+        document.getElementById("summaryName").innerText = name;
+
+        document.getElementById("summaryMatch").innerText = match;
+
+        document.getElementById("summaryTickets").innerText = tickets;
+
+        document.getElementById("total").innerText = Number(tickets) * 1000;
+
+        // Show Loading
+        document.getElementById("loading").style.display = "block";
+
+        document.getElementById("submitBtn").disabled = true;
+
+        // Simulate Processing
+        setTimeout(function () {
+          document.getElementById("loading").style.display = "none";
+
+          document.getElementById("success").style.display = "block";
+
+          document.getElementById("submitBtn").disabled = false;
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>
+```
