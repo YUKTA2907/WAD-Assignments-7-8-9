@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPL Match Schedule & Ticket Portal - Assignment 8</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Responsive Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <span class="brand-icon">🏏</span>
+        <h1 class="brand-title">IPL Portal</h1>
+      </div>
+
+      <!-- Hamburger button for mobile devices -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#matches" class="nav-link">Matches</a></li>
+        <li><a href="#pricing" class="nav-link">Ticket Tiers</a></li>
+        <li><a href="../Assignment9/book-validation.html" class="nav-link btn-link">Book Tickets</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <span class="hero-badge">TATA IPL 2027 Season</span>
+      <h1>IPL Match Schedule &amp; Tickets</h1>
+      <p>Experience the excitement of the Indian Premier League live from the stadium. Compare dates, check ticket prices, and reserve your seats today!</p>
+      <div class="hero-actions">
+        <a href="#matches" class="btn btn-gold">View Match Schedule</a>
+        <a href="../Assignment9/book-validation.html" class="btn btn-outline">Book Tickets Online</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Responsive Information Cards (CSS Grid) -->
+    <section class="card-grid" id="about">
+      <div class="card stat-card">
+        <div class="stat-icon">🏆</div>
+        <h3>10 Premier Teams</h3>
+        <p>Top international and Indian cricket stars competing for the ultimate trophy.</p>
+      </div>
+
+      <div class="card stat-card">
+        <div class="stat-icon">🏟️</div>
+        <h3>Iconic Stadiums</h3>
+        <p>Matches hosted across world-class venues in Chennai, Mumbai, Mohali, and more.</p>
+      </div>
+
+      <div class="card stat-card">
+        <div class="stat-icon">🎟️</div>
+        <h3>Affordable Tickets</h3>
+        <p>Seats starting from just ₹800 up to exclusive VIP Hospitality boxes.</p>
+      </div>
+
+      <div class="card stat-card">
+        <div class="stat-icon">⚡</div>
+        <h3>Instant Confirmation</h3>
+        <p>Seamless online booking with instant confirmation and e-ticket generation.</p>
+      </div>
+    </section>
+
+    <!-- Information Card -->
+    <section class="card info-card">
+      <h2>Important Ticket Booking Guidelines</h2>
+      <ul class="info-list">
+        <li>Select your preferred match from the schedule table below.</li>
+        <li>Click the <strong>"Book Seat"</strong> button to navigate directly to the online booking form.</li>
+        <li>Each user can book between 1 and 10 tickets per transaction.</li>
+        <li>Carry a valid government photo ID matching the booking name for stadium entry.</li>
+      </ul>
+    </section>
+
+    <!-- Match Schedule Section -->
+    <section class="card schedule-card" id="matches">
+      <div class="section-header">
+        <div>
+          <h2>Upcoming Match Schedule</h2>
+          <p class="subtitle">Filter matches by team or browse the complete 2027 fixture</p>
+        </div>
+      </div>
+
+      <!-- Filter Controls (Flexbox) -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="teamFilter">Filter by Team:</label>
+          <select id="teamFilter" onchange="applyFilter()">
+            <option value="all">All Teams</option>
+            <option value="CSK">Chennai Super Kings (CSK)</option>
+            <option value="MI">Mumbai Indians (MI)</option>
+            <option value="RCB">Royal Challengers Bengaluru (RCB)</option>
+            <option value="RR">Rajasthan Royals (RR)</option>
+            <option value="KKR">Kolkata Knight Riders (KKR)</option>
+            <option value="SRH">Sunrisers Hyderabad (SRH)</option>
+          </select>
+        </div>
+
+        <div class="filter-buttons">
+          <button type="button" class="btn btn-primary" onclick="applyFilter()">Apply Filter</button>
+          <button type="button" class="btn btn-secondary" onclick="showAll()">Show All Matches</button>
+        </div>
+      </div>
+
+      <!-- Mobile Scroll Notice -->
+      <p class="table-scroll-hint">👉 Swipe horizontally to view full match details</p>
+
+      <!-- Horizontally Scrollable Table Container -->
+      <div class="table-container">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Match No</th>
+              <th>Teams</th>
+              <th>Date &amp; Time</th>
+              <th>Venue</th>
+              <th>Ticket Price Range</th>
+              <th>Availability</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="matchTable">
+            <tr data-teams="CSK MI">
+              <td><strong>01</strong></td>
+              <td><span class="badge team-badge">CSK vs MI</span></td>
+              <td>29-Jan-2027<br /><small>6:30 PM IST</small></td>
+              <td>M. A. Chidambaram Stadium, Chennai</td>
+              <td>₹800 – ₹5,000</td>
+              <td><span class="status-available">Available</span></td>
+              <td>
+                <button class="btn btn-table" onclick="bookMatch('CSK vs MI', '29-Jan-2027 6:30 PM', 'Chennai', '₹800 - ₹5000')">Book Seat</button>
+              </td>
+            </tr>
+
+            <tr data-teams="RR RCB">
+              <td><strong>02</strong></td>
+              <td><span class="badge team-badge">RR vs RCB</span></td>
+              <td>30-Jan-2027<br /><small>6:30 PM IST</small></td>
+              <td>PCA Stadium, Mohali</td>
+              <td>₹800 – ₹5,000</td>
+              <td><span class="status-available">Available</span></td>
+              <td>
+                <button class="btn btn-table" onclick="bookMatch('RR vs RCB', '30-Jan-2027 6:30 PM', 'Mohali', '₹800 - ₹5000')">Book Seat</button>
+              </td>
+            </tr>
+
+            <tr data-teams="MI RCB">
+              <td><strong>03</strong></td>
+              <td><span class="badge team-badge">MI vs RCB</span></td>
+              <td>31-Jan-2027<br /><small>7:30 PM IST</small></td>
+              <td>Wankhede Stadium, Mumbai</td>
+              <td>₹1,000 – ₹6,000</td>
+              <td><span class="status-fast">Selling Fast</span></td>
+              <td>
+                <button class="btn btn-table" onclick="bookMatch('MI vs RCB', '31-Jan-2027 7:30 PM', 'Mumbai', '₹1000 - ₹6000')">Book Seat</button>
+              </td>
+            </tr>
+
+            <tr data-teams="KKR SRH">
+              <td><strong>04</strong></td>
+              <td><span class="badge team-badge">KKR vs SRH</span></td>
+              <td>02-Feb-2027<br /><small>7:30 PM IST</small></td>
+              <td>Eden Gardens, Kolkata</td>
+              <td>₹800 – ₹4,500</td>
+              <td><span class="status-available">Available</span></td>
+              <td>
+                <button class="btn btn-table" onclick="bookMatch('KKR vs SRH', '02-Feb-2027 7:30 PM', 'Kolkata', '₹800 - ₹4500')">Book Seat</button>
+              </td>
+            </tr>
+
+            <tr data-teams="CSK KKR">
+              <td><strong>05</strong></td>
+              <td><span class="badge team-badge">CSK vs KKR</span></td>
+              <td>05-Feb-2027<br /><small>7:30 PM IST</small></td>
+              <td>M. A. Chidambaram Stadium, Chennai</td>
+              <td>₹1,000 – ₹6,000</td>
+              <td><span class="status-fast">Selling Fast</span></td>
+              <td>
+                <button class="btn btn-table" onclick="bookMatch('CSK vs KKR', '05-Feb-2027 7:30 PM', 'Chennai', '₹1000 - ₹6000')">Book Seat</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Ticket Tiers Pricing Section (CSS Grid) -->
+    <section class="card" id="pricing">
+      <h2>Ticket Categories &amp; Pricing Tiers</h2>
+      <p class="subtitle">Choose the seating tier that best fits your matchday experience</p>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>Silver Stand</h3>
+            <p class="price">₹1,000 <span>/ ticket</span></p>
+          </div>
+          <ul class="pricing-features">
+            <li>Standard Stadium Seating</li>
+            <li>Direct Pitch View</li>
+            <li>Access to Concourse Food Stalls</li>
+            <li>Free Digital Match Programme</li>
+          </ul>
+          <a href="../Assignment9/book-validation.html" class="btn btn-outline-dark">Select Tier</a>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Most Popular</div>
+          <div class="pricing-header">
+            <h3>Gold Pavilion</h3>
+            <p class="price">₹2,500 <span>/ ticket</span></p>
+          </div>
+          <ul class="pricing-features">
+            <li>Covered Premium Pavilion Seats</li>
+            <li>Dedicated Entry Gate &amp; Fast-Track</li>
+            <li>Complimentary Matchday Cap &amp; Flag</li>
+            <li>Access to Premium Lounge &amp; Snacks</li>
+          </ul>
+          <a href="../Assignment9/book-validation.html" class="btn btn-gold">Select Tier</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>Platinum VIP</h3>
+            <p class="price">₹5,000 <span>/ ticket</span></p>
+          </div>
+          <ul class="pricing-features">
+            <li>Air-Conditioned Luxury Box Access</li>
+            <li>Unlimited Gourmet Food &amp; Beverages</li>
+            <li>Prime Sightline Above Team Dugouts</li>
+            <li>VIP Parking Pass Included</li>
+          </ul>
+          <a href="../Assignment9/book-validation.html" class="btn btn-outline-dark">Select Tier</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Responsive Footer -->
+  <footer id="contact">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3>🏏 IPL Portal</h3>
+        <p>Your official portal for Indian Premier League match schedules, fixtures, and online ticket reservations.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Tournament</a></li>
+          <li><a href="#matches">Match Schedule</a></li>
+          <li><a href="#pricing">Ticket Pricing</a></li>
+          <li><a href="../Assignment9/book-validation.html">Book Tickets</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Customer Support</h4>
+        <p>Email: tickets@iplportal.com</p>
+        <p>Helpline: 1800-123-4567</p>
+        <p>Hours: Mon - Sun (9:00 AM - 9:00 PM)</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 IPL Match Schedule &amp; Ticket Portal. All Rights Reserved. | Web Application Development (WAD)</p>
+    </div>
+  </footer>
+
+  <!-- Beginner-friendly JavaScript -->
+  <script>
+    // Mobile navigation toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (navToggle) {
+      navToggle.addEventListener('click', function() {
+        navLinks.classList.toggle('open');
+      });
+    }
+
+    // Apply filter by team
+    function applyFilter() {
+      let selectedTeam = document.getElementById('teamFilter').value;
+      let rows = document.querySelectorAll('#matchTable tr');
+
+      rows.forEach(function(row) {
+        let teams = row.getAttribute('data-teams');
+        if (selectedTeam === 'all' || (teams && teams.includes(selectedTeam))) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    // Reset filter to show all matches
+    function showAll() {
+      let rows = document.querySelectorAll('#matchTable tr');
+      rows.forEach(function(row) {
+        row.style.display = '';
+      });
+      document.getElementById('teamFilter').value = 'all';
+    }
+
+    // Book match button handler with option to jump to validation form
+    function bookMatch(match, date, venue, price) {
+      let message = "Match Selected: " + match +
+                    "\nDate: " + date +
+                    "\nVenue: " + venue +
+                    "\nPrice: " + price +
+                    "\n\nWould you like to proceed to the Ticket Booking Form?";
+      if (confirm(message)) {
+        window.location.href = "../Assignment9/book-validation.html";
+      }
+    }
+  </script>
+</body>
+</html>
